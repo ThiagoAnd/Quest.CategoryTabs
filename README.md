@@ -32,6 +32,11 @@ You do not need to look for it. A mod that needs CategoryTabs installs it for yo
 
 To install it by hand, drop `CategoryTabs.qmod` from the [releases](../../releases) into MBF.
 
+## Versions
+
+- [Releases](../../releases) with the download of each version
+- [Changelog](CHANGELOG.md) with what changed in each one
+
 ## Problems
 
 Send `/sdcard/ModData/com.beatgames.beatsaber/logs2/CategoryTabs.log`.
