@@ -112,6 +112,10 @@ Add it as a dependency in `mod.template.json` so MBF installs it with your mod:
 
 - [HidePacks](https://github.com/ThiagoAnd/Quest.HidePacks), hides official packs from the song list
 
+## Support
+
+If this mod made your game better and you would like to see more from me, you can support my work on [Ko-fi](https://ko-fi.com/YOUR_USERNAME). Thank you!
+
 ## Credits
 
 Made by **ThiagoAnd**
