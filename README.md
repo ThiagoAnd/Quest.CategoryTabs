@@ -15,6 +15,10 @@
   <img src="docs/pages.jpg" alt="The category bar on pages 1 to 4, with Back and Next buttons">
 </p>
 
+<p align="center">
+  <img src="docs/demo.gif" alt="Going through the pages with Next and Back">
+</p>
+
 ## What it does
 
 - Lets any mod add its own tab next to the ones the game has
