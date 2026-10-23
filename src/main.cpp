@@ -6,6 +6,8 @@
 #include "modInfo.hpp"
 #include "scotland2/shared/modloader.h"
 
+void RegisterDemoTabs();
+
 MOD_EXPORT_FUNC void setup(CModInfo& info) {
     Paper::Logger::RegisterFileContextId(MOD_ID);
     info = modInfo.to_c();
@@ -18,6 +20,7 @@ MOD_EXPORT_FUNC void load() {
 
 MOD_EXPORT_FUNC void late_load() {
     Logger.info("===== CategoryTabs {} starting =====", VERSION);
+    RegisterDemoTabs();
     auto lateHookCount = LATE_HOOK_COUNT;
     if (lateHookCount > 0) {
         Logger.info("Installing {} late hooks", lateHookCount);
