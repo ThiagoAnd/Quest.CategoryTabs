@@ -68,6 +68,36 @@ if (!CategoryTabsApi::Register(tab)) {
 
 `Register` returns false when CategoryTabs is missing or the arguments are wrong, so your mod can carry on without it.
 
+### A minimal screen
+
+Your screen is a normal `HMUI::ViewController`, so you build it the way you like, here with BSML:
+
+```cpp
+DECLARE_CLASS_CODEGEN(MyMod, MyViewController, HMUI::ViewController) {
+    DECLARE_OVERRIDE_METHOD_MATCH(void, DidActivate, &HMUI::ViewController::DidActivate, bool firstActivation, bool addedToHierarchy, bool screenSystemDisabling);
+};
+
+void MyMod::MyViewController::DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemDisabling) {
+    if (!firstActivation) {
+        return;
+    }
+    gameObject->AddComponent<HMUI::Touchable*>();
+    auto layout = BSML::Lite::CreateVerticalLayoutGroup(transform);
+    BSML::Lite::CreateText(layout->transform, "Hello from my tab");
+    BSML::Lite::CreateUIButton(layout->transform, "Click me", [] { Logger.info("clicked"); });
+}
+
+void Show(GlobalNamespace::LevelFilteringNavigationController* navigation) {
+    static UnityW<MyMod::MyViewController> screen;
+    if (!screen) {
+        screen = BSML::Helpers::CreateViewController<MyMod::MyViewController*>();
+    }
+    navigation->ReplaceSecondViewController(screen.ptr());
+}
+```
+
+Use `Show` as your `onSelected`. A full example with covers, switches and buttons is in [HidePacks](https://github.com/ThiagoAnd/Quest.HidePacks/blob/usa-categorytabs/src/Panel.cpp)
+
 Add it as a dependency in `mod.template.json` so MBF installs it with your mod:
 
 ```json
