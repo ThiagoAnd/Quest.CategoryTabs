@@ -107,8 +107,8 @@ Add it as a dependency in `mod.template.json` so MBF installs it with your mod:
 ```json
 {
   "id": "CategoryTabs",
-  "versionRange": "^0.1.0",
-  "downloadIfMissing": "https://github.com/ThiagoAnd/Quest.CategoryTabs/releases/download/v0.1.0/CategoryTabs.qmod"
+  "versionRange": "^0.1.1",
+  "downloadIfMissing": "https://github.com/ThiagoAnd/Quest.CategoryTabs/releases/download/v0.1.1/CategoryTabs.qmod"
 }
 ```
 

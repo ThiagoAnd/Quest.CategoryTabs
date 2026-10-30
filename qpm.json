@@ -6,8 +6,8 @@
   "info": {
     "name": "CategoryTabs",
     "id": "CategoryTabs",
-    "version": "0.1.0",
-    "url": null,
+    "version": "0.1.1",
+    "url": "https://github.com/ThiagoAnd/Quest.CategoryTabs",
     "additionalData": {
       "overrideSoName": "libCategoryTabs.so",
       "cmake": true
