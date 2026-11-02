@@ -2,6 +2,11 @@
 
 All notable changes to this mod are listed here. The format follows Keep a Changelog.
 
+## [0.1.2] - 2026-11-02
+
+### Changed
+- Releases are now immutable and come with an attestation.
+
 ## [0.1.1] - 2026-10-30
 
 ### Added

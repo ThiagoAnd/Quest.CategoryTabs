@@ -138,6 +138,8 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
+      id-token: write
+      attestations: write
 
     steps:
       - name: Checkout
@@ -175,18 +177,6 @@ jobs:
         run: |
           echo "QMOD_SHA=$(sha256sum "output/$(basename "${{ needs.qpm_info.outputs.qmod_output_path }}")" | grep -Po "^[0-9a-f]+")" | tee -a $GITHUB_OUTPUT
 
-      - name: Upload .qmod
-        id: upload_file_qmod
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.event.inputs.version }}
-          draft: false
-          body_path: notes.txt
-          files: |
-            ./output/*.qmod
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Generate release body
         run: |
           cat notes.txt > body.txt
@@ -203,15 +193,28 @@ jobs:
           (cd output && sha256sum *) >> body.txt
           echo '```' >> body.txt
 
-      - name: Upload .so artifacts
-        id: upload_file_so
+      - name: Attest build artifacts
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            output/*.qmod
+            output/*.so
+
+      - name: Create draft release
+        id: upload_release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.version }}
-          files: |
-            ./output/*.so
+          draft: true
           body_path: body.txt
+          files: |
+            ./output/*.qmod
+            ./output/*.so
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Publish release
+        run: gh release edit "$GITHUB_REF_NAME" --draft=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -231,7 +234,7 @@ jobs:
         with:
           token: ${{ secrets.BSQMODS_TOKEN }}
           qmod_url: ${{
-            fromJSON(steps.upload_file_qmod.outputs.assets)[0].browser_download_url
+            fromJSON(steps.upload_release.outputs.assets)[0].browser_download_url
             }}
           qmod_repo_owner: "QuestPackageManager"
           qmod_repo_name: "bsqmods"
